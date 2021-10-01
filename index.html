@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giphy API Demo</title>
+</head>
+<body>
+    <header>
+        <input id="search-bar" type="text" placeholder="Cats"></input>
+        <button>Switch Image</button>
+    </header>
+    <img id="image-container" src="#">
+    <script>
+        const button = document.querySelector('button');
+        const img = document.querySelector('img');
+        const searchBar = document.querySelector('#search-bar');
+        
+        const fetchImage = async (image) => {
+            try {
+                const response = await fetch(`https://api.giphy.com/v1/gifs/translate?api_key=uFnrA5DlA0fLCaz4Rsg5LoxlMUEHXJ1i&s=${image}`, {mode: 'cors'})
+                const responseImage = await response.json();
+                img.src = responseImage.data.images.original.url;
+            } catch (error) {
+                alert('Nothing found, please try again');
+            };
+        }
+        button.addEventListener('click', () => {
+            let searchInput = searchBar.value;
+            if (!searchInput) {
+                searchInput = 'cats';
+            }
+            fetchImage(searchInput);
+        });
+        fetchImage('cats');
+    </script>
+</body>
+</html>
